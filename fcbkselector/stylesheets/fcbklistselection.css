@@ -1,0 +1,137 @@
+.list-selector-filters {
+	border-bottom: 1px solid #c1c1c1;
+	margin: 0;
+	padding: 4px 0 5px 0;
+}
+
+	.list-selector-filters .selections {
+		float: left;
+		list-style-type: none;
+		margin: 0px;
+		padding: 0px;
+	}
+	
+		.list-selector-filters .selections li {
+			float: left;
+			padding: 4px 3px;
+			text-align: center;
+		}
+			
+			.list-selector-filters .selections li a,
+			.list-selector-filters .selections li h3 {
+				color: #777;
+				display: block;
+				float: left;
+				font-size: 11px;
+				margin: 0;
+				padding: 2px 5px;
+				position: relative;
+			}
+			
+				.list-selector-filters .selections li h3 {
+					color: #333;
+					font-size: 12px;
+					padding-left: 0;
+				}
+			
+				.list-selector-filters .selections li a:hover {
+					background: none;
+					color: #333;
+					text-decoration: underline;
+				}
+			
+			.list-selector-filters .selections li.view_on a {
+				-moz-border-radius: 8px;
+				-webkit-border-radius: 8px;
+				background: #06c;
+				border: 1px solid #0000a0;
+				color: #fff;
+				cursor: default;
+				font-weight: bold;
+				text-decoration: none;
+			}
+
+.list-selector {
+	border-color: #c1c1c1;
+	border-style: none solid solid;
+	border-width: medium 1px 1px;
+	font-size: 9.5px;
+	height: 250px;
+	margin-top: 0;
+	overflow-y: scroll;
+	padding: 0;
+	z-index: 1;
+}
+
+	.list-selector div {
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border: 1px solid #d8dfea;
+		display: block;
+		float: left;
+		list-style-image: none;
+		list-style-type: none;
+		margin: 2px;
+		padding: 2px;	
+	}
+
+		.list-selector div img {
+			float: left;
+			margin-right: 5px;
+		}
+		
+			.list-selector div img.checked {
+				margin: 0;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				z-index: 10;
+			}
+
+	.list-selector .fcbklist_item {
+		background-color: #fff;
+		border: none;
+		color: #666;
+		clear: both;
+		height: 50px;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		position: relative;
+	}
+
+		.list-selector .fcbklist_item input {
+			display: none;
+		}
+
+	.list-selector .itemover {
+		background-color: #f7f7f7 !important;
+		cursor: pointer;
+	}
+	
+		.list-selector .itemover label {
+			cursor: pointer;
+		}
+
+	.list-selector .selected {
+		border: 1px solid #06c !important;
+		background-color: #d8e3f6 !important;
+	}
+	
+	.list-selector .itemselected {
+		background-color: #d8e3f6 !important;
+		color: #333;
+	}
+
+	.list-selector strong {
+		color: #222;
+		font-size: 11px;	
+		margin-top: 2px;
+		width: 65px;
+	}
+
+.clearer {
+	clear: both;
+	margin: 0;
+	padding: 0;
+}
