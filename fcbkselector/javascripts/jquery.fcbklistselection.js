@@ -16,10 +16,29 @@
 	 * height - height of each element
 	 * row - number of items in row
 	 */
-	$.fcbkListSelection = function(elem, width, height, row){
+	$.fcbkListSelection = function(elem, width, height, row, showSearch, searchInitText){
 		
-		var bindEventsOnSearch = function(elem) {
-			$("#" + elem.attr("id") + "_search").keyup(function(event){
+		// Search filter and search box behavior
+		var bindEventsOnSearch = function(elem, searchInitText) {
+			var searchBox = $("#" + elem.attr("id") + "_search");
+			// Make init text disappear when something is entered
+			// Click
+			searchBox.click(function(){
+				if(searchBox.attr("class") == "init") {
+					searchBox.val("");
+					searchBox.removeClass("init");
+				}
+			});
+			// Blur
+			searchBox.blur(function(){
+				if(searchBox.attr("value") == "") {
+					searchBox.val(searchInitText);
+					searchBox.addClass("init");
+				}
+			});
+			
+			// Search functionality
+			searchBox.keyup(function(event){
 				var filter = $(this).val();
 				var count = 0;
 				//if esc is pressed or nothing is entered
@@ -40,13 +59,18 @@
 						}
 					});
 				}
-				hiddenCheck();
+				hiddenCheck(true);
 			});
 		}
 		
 		//get content of tabs
-		var getContent = function(elem, tab) {
-			var searchFilterLen = $("#" + elem.attr("id") + "_search").attr("value").length;
+		var getContent = function(elem, tab, showSearch) {
+			if(showSearch) {
+				var searchFilterLen = $("#" + elem.attr("id") + "_search").attr("value").length;
+			}
+			else {
+				var searchFilterLen = 0;
+			}
 			switch(tab) {
 				case "all":
 					// Search filter in use
@@ -98,8 +122,8 @@
 			}
 		}
 		
-		var hiddenCheck = function() {
-			getContent(elem, curTab());
+		var hiddenCheck = function(showSearch) {
+			getContent(elem, curTab(), showSearch);
 		}
 		
 		//add to selected items function
@@ -116,7 +140,7 @@
 			}
 		}
 		
-		var toggleSelected = function(obj, allowRemoval) {
+		var toggleSelected = function(obj, allowRemoval, showSearch) {
 			addToSelected(obj);
 			obj.toggleClass("itemselected");
 			obj.parents("div").toggleClass("selected");
@@ -130,11 +154,11 @@
 			else if(allowRemoval) {
 				obj.find("img.checked").remove();
 			}
-			hiddenCheck();
+			hiddenCheck(showSearch);
 		}
 		
 		//bind onmouseover && click event on item
-		var bindEventsOnItems = function(elem) {
+		var bindEventsOnItems = function(elem, showSearch) {
 			$.each(elem.children("div").children(".fcbklist_item"), function(i, obj){
 				obj = $(obj);
 				if(obj.children("input[checked]").length != 0) {
@@ -150,7 +174,7 @@
 					}
 				}
 				obj.click(function(){
-					toggleSelected(obj, true);
+					toggleSelected(obj, true, showSearch);
 				});
 				obj.children("label").click(function(){
 					toggleSelected(obj, true);
@@ -165,19 +189,19 @@
 		}
 		
 		//bind onclick event on filters
-		var bindEventsOnTabs = function(elem) {
+		var bindEventsOnTabs = function(elem, showSearch) {
 			$.each($("#selections_" + elem.attr("id") + " li"), function(i, obj){
 				obj = $(obj);
 				obj.click(function(){
 					$(".view_on").removeClass("view_on");
 					obj.addClass("view_on");
-					getContent(elem, obj.attr("id").replace(elem.attr("id") + "_view_", ""));
+					getContent(elem, obj.attr("id").replace(elem.attr("id") + "_view_", ""), showSearch, searchInitText);
 				});
 			});
 		}
 		
 		//create control tabs
-		var createTabs = function(elem, width) {
+		var createTabs = function(elem, width, showSearch, searchInitText) {
 			var html =
 				'<div class="list-selector-filters" style="width:' + (parseInt(width, 10) + 2) + 'px;">' +
 					'<ul class="selections" id="selections_' + elem.attr("id") +'">' +
@@ -192,10 +216,15 @@
 							'<a onclick="return false;" href="#">Unselected</a>' +
 						'</li>' +
 						
-					'</ul>' +
-				'<div class="search">' +
-					'<input id="' + elem.attr("id") + '_search" type="text" />' +
-				'</div>' +
+					'</ul>';
+				// If showing the search bar
+				if(showSearch) {
+					html = html +
+						'<div class="search">' +
+							'<input id="' + elem.attr("id") + '_search" type="text" value="' + searchInitText + '" class="init" />' +
+						'</div>';
+				}
+			html = html +
 				'<div class="clearer"></div>' +
 			'</div>';
 			elem.before(html);
@@ -232,12 +261,14 @@
 		elem.css("width", width + 30 + "px");
 		elem.addClass("list-selector");
 		
-		createTabs(elem, width + 30);
+		createTabs(elem, width + 30, showSearch, searchInitText);
 		wrapElements(elem, width, height, row);
 		
-		bindEventsOnTabs(elem);
-		bindEventsOnItems(elem);
-		bindEventsOnSearch(elem);
+		bindEventsOnTabs(elem, showSearch);
+		bindEventsOnItems(elem, showSearch);
+		if(showSearch) {
+			bindEventsOnSearch(elem, searchInitText);
+		}
 		
 	}
 

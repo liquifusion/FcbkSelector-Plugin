@@ -53,11 +53,21 @@
 			
 	.list-selector-filters .search {
 		float: right;
+		margin-top: 2px;
 	}
 	
 	.list-selector-filters .search input {
-		width: 200px;
+		background: url(../images/search-box.png) no-repeat 0 0;
+		border: 0;
+		height: 22px;
+		font-size: 12px;
+		padding: 0 10px 0 23px;
+		width: 144px;
 	}
+	
+		.list-selector-filters .search input.init {
+			color: #999;
+		}
 
 .list-selector {
 	border-color: #c1c1c1;

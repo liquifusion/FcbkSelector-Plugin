@@ -4,7 +4,7 @@
 
 <cfoutput>
 
-<h1>FcbkSelector v0.1</h1>
+<h1>FcbkSelector v0.2</h1>
 <p>With a single function, add a fully-accessible Facebook-like multi-selection widget that is bound directly to your nested properties.</p>
 <p>This plugin requires version 1.1 or greater of ColdFusion on Wheels.</p>
 
@@ -61,6 +61,20 @@
 			<td><tt>true</tt></td>
 			<td></td>
 			<td>HTML <tt>id</tt> to assign to the selector's container. This is referenced by the jQuery implementation.</td>
+		</tr>
+		<tr class="highlight">
+			<td><tt>showSearch</tt></td>
+			<td><tt>boolean</tt></td>
+			<td><tt>false</tt></td>
+			<td><tt>true</tt></td>
+			<td>Whether or not to show the search filter box.</td>
+		</tr>
+		<tr>
+			<td><tt>searchInitText</tt></td>
+			<td><tt>string</tt></td>
+			<td><tt>false</tt></td>
+			<td><tt>Start Typing a Name</tt></td>
+			<td>Text to display in search filter box on load.</td>
 		</tr>
 		<tr class="highlight">
 			<td><tt>className</tt></td>

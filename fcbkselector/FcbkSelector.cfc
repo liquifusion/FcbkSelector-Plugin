@@ -22,6 +22,8 @@
 		<cfargument name="association" type="variablename" hint="Name of association represented by this selection in the parent object.">
 		<cfargument name="options" type="any" hint="Query resultset or array of objects representing all options to display.">
 		<cfargument name="id" type="string" hint="HTML `id` to assign to the selector's container. This is referenced by the jQuery implementation.">
+		<cfargument name="showSearch" type="boolean" default="#application.fcbkSelector.showSearch#" hint="Whether or not to show the search filter box.">
+		<cfargument name="searchInitText" type="string" default="#application.fcbkSelector.searchInitText#" hint="Text to display in search filter box on load.">
 		<cfargument name="className" type="string" default="" hint="Class name to assign to the selector's container.">
 		<cfargument name="width" type="numeric" default="#application.fcbkSelector.width#" hint="Width of the widget.">
 		<cfargument name="itemHeight" type="numeric" default="#application.fcbkSelector.itemHeight#" hint="Height of each item in the widget.">
@@ -90,6 +92,8 @@
 		<cfparam name="application.fcbkSelector.width" type="numeric" default="500">
 		<cfparam name="application.fcbkSelector.itemHeight" type="numeric" default="50">
 		<cfparam name="application.fcbkSelector.itemsPerRow" type="numeric" default="3">
+		<cfparam name="application.fcbkSelector.showSearch" type="boolean" default="true">
+		<cfparam name="application.fcbkSelector.searchInitText" type="string" default="Start Typing a Name">
 	
 	</cffunction>
 	
