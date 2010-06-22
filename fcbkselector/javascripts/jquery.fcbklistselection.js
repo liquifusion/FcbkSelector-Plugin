@@ -16,23 +16,84 @@
 	 * height - height of each element
 	 * row - number of items in row
 	 */
-	jQuery.fcbkListSelection = function(elem, width, height, row){
+	$.fcbkListSelection = function(elem, width, height, row){
+		
+		var bindEventsOnSearch = function(elem) {
+			$("#" + elem.attr("id") + "_search").keyup(function(event){
+				var filter = $(this).val();
+				var count = 0;
+				//if esc is pressed or nothing is entered
+				if (event.keyCode == 27) {
+					//if esc is pressed we want to clear the value of search box
+					$(this).val('');
+					//we want each row to be visible because if nothing is entered then all rows are matched.
+					$("#" + elem.attr("id") + " .fcbklist_item").parent().removeClass('filtered');
+				}
+				else {
+					$("#" + elem.attr("id") + " .fcbklist_item").each(function(){
+						if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+							$(this).parent().removeClass("filtered");
+						}
+						else {
+							$(this).parent().addClass("filtered");
+							count++;
+						}
+					});
+				}
+				hiddenCheck();
+			});
+		}
 		
 		//get content of tabs
 		var getContent = function(elem, tab) {
+			var searchFilterLen = $("#" + elem.attr("id") + "_search").attr("value").length;
 			switch(tab) {
 				case "all":
-					elem.children("div").show();
+					// Search filter in use
+					if(searchFilterLen > 0) {
+						elem.children("div.filtered").show();
+						elem.children("div:not(.filtered)").hide();
+					}
+					// Search filter not in use
+					else {
+						elem.children("div").show();
+					}
 					break;
 					
 				case "selected":
+					// Search filter in use
 					elem.children("div:not(.selected)").hide();
-					elem.children("div.selected").show();
+					if(searchFilterLen > 0) {
+						elem.children("div.selected").each(function(){
+							if($(this).hasClass("filtered")) {
+								$(this).show();
+							}
+							else {
+								$(this).hide();
+							}
+						});
+					}
+					else {
+						elem.children("div.selected").show();
+					}
 					break;
 					
 				case "unselected":
+					// Search filter in use
 					elem.children("div.selected").hide();
-					elem.children("div:not(.selected)").show();
+					if(searchFilterLen > 0) {
+						elem.children("div:not(.selected)").each(function(){
+							if($(this).hasClass("filtered")) {
+								$(this).show();
+							}
+							else {
+								$(this).hide();
+							}
+						});
+					}
+					else {
+						elem.children("div:not(.selected)").show();
+					}
 					break;
 			}
 		}
@@ -130,7 +191,11 @@
 						'<li id="' + elem.attr("id") + '_view_unselected">' +
 							'<a onclick="return false;" href="#">Unselected</a>' +
 						'</li>' +
+						
 					'</ul>' +
+				'<div class="search">' +
+					'<input id="' + elem.attr("id") + '_search" type="text" />' +
+				'</div>' +
 				'<div class="clearer"></div>' +
 			'</div>';
 			elem.before(html);
@@ -172,6 +237,7 @@
 		
 		bindEventsOnTabs(elem);
 		bindEventsOnItems(elem);
+		bindEventsOnSearch(elem);
 		
 	}
 

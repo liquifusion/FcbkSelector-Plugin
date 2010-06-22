@@ -50,6 +50,14 @@
 				font-weight: bold;
 				text-decoration: none;
 			}
+			
+	.list-selector-filters .search {
+		float: right;
+	}
+	
+	.list-selector-filters .search input {
+		width: 200px;
+	}
 
 .list-selector {
 	border-color: #c1c1c1;
