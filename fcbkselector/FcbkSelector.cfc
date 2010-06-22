@@ -38,6 +38,7 @@
 		<cfargument name="includeJQuery" type="boolean" default="#application.fcbkSelector.includeJQuery#" hint="Whether or not to include jQuery in your document's <head> automatically.">
 		<cfargument name="includeJQueryPlugin" type="boolean" default="#application.fcbkSelector.includeJQueryPlugin#" hint="Whether or not to include the included fcbkListSelection jQuery plugin in your document's `<head>` automatically.">
 		<cfargument name="includeStylesheet" type="boolean" default="#application.fcbkSelector.includeStylesheet#" hint="Whether or not to include our stylesheet in your document's <head> automatically.">
+		<cfargument name="checkedImageLoc" type="string" default="#application.fcbkSelector.checkedImageLoc#" hint="Location of image to use as a checkmark overlay on selected items.">
 		
 		<!--- Include jQuery and stylesheets if requested --->
 		<cfinclude template="views/html_head.cfm">
@@ -94,6 +95,7 @@
 		<cfparam name="application.fcbkSelector.itemsPerRow" type="numeric" default="3">
 		<cfparam name="application.fcbkSelector.showSearch" type="boolean" default="true">
 		<cfparam name="application.fcbkSelector.searchInitText" type="string" default="Start Typing a Name">
+		<cfparam name="application.fcbkSelector.checkedImageLoc" type="string" default="/plugins/fcbkselector/images/group-list-checked.png">
 	
 	</cffunction>
 	

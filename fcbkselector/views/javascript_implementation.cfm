@@ -6,6 +6,7 @@
 <cfparam name="arguments.itemsPerRow" type="numeric">
 <cfparam name="arguments.showSearch" type="boolean">
 <cfparam name="arguments.searchInitText" type="string">
+<cfparam name="arguments.checkedImageLoc" type="string">
 
 <cfsavecontent variable="javascript">
 	<cfoutput>
@@ -22,7 +23,8 @@
 					<cfelse>
 						false,
 					</cfif>
-					"#arguments.searchInitText#"
+					"#arguments.searchInitText#",
+					"#arguments.checkedImageLoc#"
 				);
 			});
 		})(jQuery);

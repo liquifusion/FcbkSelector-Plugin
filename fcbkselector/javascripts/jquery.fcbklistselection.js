@@ -15,8 +15,11 @@
 	 * width - width of ul
 	 * height - height of each element
 	 * row - number of items in row
+	 * showSearch - whether or not to show the search filter box
+	 * searchInitText - text to display on init for search filter box
+	 * checkedImageLoc - location of image to display as checkmark
 	 */
-	$.fcbkListSelection = function(elem, width, height, row, showSearch, searchInitText){
+	$.fcbkListSelection = function(elem, width, height, row, showSearch, searchInitText, checkedImageLoc){
 		
 		// Search filter and search box behavior
 		var bindEventsOnSearch = function(elem, searchInitText) {
@@ -141,13 +144,13 @@
 			}
 		}
 		
-		var toggleSelected = function(obj, allowRemoval, showSearch, searchInitText) {
+		var toggleSelected = function(obj, allowRemoval, showSearch, searchInitText, checkedImageLoc) {
 			addToSelected(obj);
 			obj.toggleClass("itemselected");
 			obj.parents("div").toggleClass("selected");
 			if(obj.hasClass("itemselected")) {
 				$(document.createElement("img"))
-					.attr("src", "../images/group-list-checked.png")
+					.attr("src", checkedImageLoc)
 					.attr("alt", "")
 					.addClass("checked")
 					.prependTo(obj);
@@ -159,7 +162,7 @@
 		}
 		
 		//bind onmouseover && click event on item
-		var bindEventsOnItems = function(elem, showSearch, searchInitText) {
+		var bindEventsOnItems = function(elem, showSearch, searchInitText, checkedImageLoc) {
 			$.each(elem.children("div").children(".fcbklist_item"), function(i, obj){
 				obj = $(obj);
 				if(obj.children("input[checked]").length != 0) {
@@ -175,10 +178,10 @@
 					}
 				}
 				obj.click(function(){
-					toggleSelected(obj, true, showSearch, searchInitText);
+					toggleSelected(obj, true, showSearch, searchInitText, checkedImageLoc);
 				});
 				obj.children("label").click(function(){
-					toggleSelected(obj, true, showSearch, searchInitText);
+					toggleSelected(obj, true, showSearch, searchInitText, checkedImageLoc);
 				});
 				obj.mouseover(function(){
 					obj.addClass("itemover");
@@ -266,7 +269,7 @@
 		wrapElements(elem, width, height, row);
 		
 		bindEventsOnTabs(elem, showSearch, searchInitText);
-		bindEventsOnItems(elem, showSearch, searchInitText);
+		bindEventsOnItems(elem, showSearch, searchInitText, checkedImageLoc);
 		if(showSearch) {
 			bindEventsOnSearch(elem, searchInitText);
 		}
