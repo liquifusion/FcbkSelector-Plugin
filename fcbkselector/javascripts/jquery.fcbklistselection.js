@@ -59,17 +59,18 @@
 						}
 					});
 				}
-				hiddenCheck(true);
+				hiddenCheck(true, searchInitText);
 			});
 		}
 		
 		//get content of tabs
-		var getContent = function(elem, tab, showSearch) {
+		var getContent = function(elem, tab, showSearch, searchInitText) {
+			var searchFilterLen = 0;
 			if(showSearch) {
-				var searchFilterLen = $("#" + elem.attr("id") + "_search").attr("value").length;
-			}
-			else {
-				var searchFilterLen = 0;
+				var searchFilterText = $("#" + elem.attr("id") + "_search").attr("value");
+				if(searchFilterText != searchInitText) {
+					var searchFilterLen = $("#" + elem.attr("id") + "_search").attr("value").length;
+				}
 			}
 			switch(tab) {
 				case "all":
@@ -122,8 +123,8 @@
 			}
 		}
 		
-		var hiddenCheck = function(showSearch) {
-			getContent(elem, curTab(), showSearch);
+		var hiddenCheck = function(showSearch, searchInitText) {
+			getContent(elem, curTab(), showSearch, searchInitText);
 		}
 		
 		//add to selected items function
@@ -140,7 +141,7 @@
 			}
 		}
 		
-		var toggleSelected = function(obj, allowRemoval, showSearch) {
+		var toggleSelected = function(obj, allowRemoval, showSearch, searchInitText) {
 			addToSelected(obj);
 			obj.toggleClass("itemselected");
 			obj.parents("div").toggleClass("selected");
@@ -154,11 +155,11 @@
 			else if(allowRemoval) {
 				obj.find("img.checked").remove();
 			}
-			hiddenCheck(showSearch);
+			hiddenCheck(showSearch, searchInitText);
 		}
 		
 		//bind onmouseover && click event on item
-		var bindEventsOnItems = function(elem, showSearch) {
+		var bindEventsOnItems = function(elem, showSearch, searchInitText) {
 			$.each(elem.children("div").children(".fcbklist_item"), function(i, obj){
 				obj = $(obj);
 				if(obj.children("input[checked]").length != 0) {
@@ -174,10 +175,10 @@
 					}
 				}
 				obj.click(function(){
-					toggleSelected(obj, true, showSearch);
+					toggleSelected(obj, true, showSearch, searchInitText);
 				});
 				obj.children("label").click(function(){
-					toggleSelected(obj, true);
+					toggleSelected(obj, true, showSearch, searchInitText);
 				});
 				obj.mouseover(function(){
 					obj.addClass("itemover");
@@ -189,7 +190,7 @@
 		}
 		
 		//bind onclick event on filters
-		var bindEventsOnTabs = function(elem, showSearch) {
+		var bindEventsOnTabs = function(elem, showSearch, searchInitText) {
 			$.each($("#selections_" + elem.attr("id") + " li"), function(i, obj){
 				obj = $(obj);
 				obj.click(function(){
@@ -264,8 +265,8 @@
 		createTabs(elem, width + 30, showSearch, searchInitText);
 		wrapElements(elem, width, height, row);
 		
-		bindEventsOnTabs(elem, showSearch);
-		bindEventsOnItems(elem, showSearch);
+		bindEventsOnTabs(elem, showSearch, searchInitText);
+		bindEventsOnItems(elem, showSearch, searchInitText);
 		if(showSearch) {
 			bindEventsOnSearch(elem, searchInitText);
 		}
